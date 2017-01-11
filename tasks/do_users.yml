@@ -39,5 +39,5 @@
     state: "{{ rrs_authorized_keys_default_state }}"
     exclusive: "{{ item.exclusive | default(rrs_authorized_keys_default_exclusive) }}"
     validate_certs: "{{ item.validate_certs | default(rrs_authorized_keys_default_validate_certs) }}"
-    key: "{{ item.key }}"
+    key: "{{ item.key | default('')}}"
   when: "{{ lookup('template', 'templates/is_member.j2') }}"

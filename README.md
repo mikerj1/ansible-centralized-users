@@ -20,7 +20,7 @@ Role Variables
 
 Default variables are in defaults/main.yml and can be overridden.  The role expects lists "group_list" and "user_list" to be defined in a variables file.
 All parameters supported by the Ansible users, groups or authrorized_keys modules supported. An example group_vars/all/ (eg: directory.yml):
-`
+```yaml
 ---
   # Override defaults here.  See defaults/main.yl
   rrs_user_default_shell: /bin/zsh
@@ -68,7 +68,7 @@ All parameters supported by the Ansible users, groups or authrorized_keys module
         - vpn
         - logmonitor
       key: "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAi9q+/QR6YJkISyJ19obrjF6gu7eTrY70vU2AnJbMt7Huo0bJVRsnu5cPDdA0wHmCBaImxD4D4XO4O+pAJ889R54fvcQzwTdWOPornyzN5rpccZmPb/tsr+/k7HT5lStl1kHL53AWmkCyS1GEGZNYY4P3GDBBXHjGaPt/YQ5/eME1EQce2j+AxLuHdLBawlylg2lCgkGTOdob4YAuggLPu02/6qm/XevSHoxuTBqUJcRqv7JAG68+vqIEGKc/pUgVuVFDabJmrESjQMTsmWgONHxgi8wpn+m5CqMPzlNBOqn97t2BBjbMjqVIEcBBCI1iyz3tAGkL0tieBSATR9n7/w== rsa-key-20161205"
-`
+```
 
 Dependencies
 ------------

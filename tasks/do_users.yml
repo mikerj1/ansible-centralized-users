@@ -1,0 +1,43 @@
+---
+# tasks file for rrs.centralized-users
+
+
+
+- name: "Processing presence of user {{ item.name }}"
+  user:
+  args:
+    name: "{{ item.name }}"
+    uid: "{{ item.uid | default(omit) }}"
+    shell: "{{ item.shell | default(rrs_user_default_shell) }}"
+    groups: "{{ item.groups | default(omit) }}"
+    state: "{{ lookup('template', 'templates/is_member.j2') | ternary('present','absent') }}"
+    append: "{{ item.append | default(rrs_user_default_append) }}"
+    comment: "{{ item.comment | default(omit) }}"
+    createhome: "{{ item.createhome | default(rrs_user_default_createhome) }}"
+    expires: "{{ item.expires | default(omit) }}"
+    force: "{{ item.force | default(rrs_user_default_force) }}"
+    generate_ssh_key: "{{ item.generate_ssh_key | default(rrs_user_default_generate_ssh_key) }}"
+    home: "{{ item.home | default(omit) }}"
+    login_class: "{{ item.login_class | default(omit) }}"
+    move_home: "{{ item.move_home | default(rrs_user_default_move_home) }}"
+    non_unique: "{{ item.non_unique | default(rrs_user_default_non_unique) }}"
+    password: "{{ item.password | default(omit) }}"
+    remove: "{{ item.remove | default(rrs_user_default_remove) }}"
+    ssh_key_bits: "{{ item.ssh_key_bits | default(rrs_user_default_ssh_key_bits) }}"
+    ssh_key_comment: "{{ item.ssh_key_comment | default(omit) }}"
+    ssh_key_file: "{{ item.ssh_key_file | default(omit) }}"
+    ssh_key_passphrase: "{{ item.ssh_key_passphrase | default(omit) }}"
+    ssh_key_type: "{{ item.ssh_key_type | default (omit) }}"
+    system: "{{ item.system | default(rrs_user_default_system) }}"
+    update_password: "{{ item.update_password | default(rrs_user_default_update_password) }}"
+    
+  
+- name: "Handling keys for user {{ item.name }}"
+  authorized_key:
+  args:
+    user: "{{ item.name }}"
+    state: "{{ rrs_authorized_keys_default_state }}"
+    exclusive: "{{ item.exclusive | default(rrs_authorized_keys_default_exclusive) }}"
+    validate_certs: "{{ item.validate_certs | default(rrs_authorized_keys_default_validate_certs) }}"
+    key: "{{ item.key }}"
+  when: "{{ lookup('template', 'templates/is_member.j2') }}"

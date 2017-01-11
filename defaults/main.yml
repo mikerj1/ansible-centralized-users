@@ -1,0 +1,30 @@
+---
+
+
+# Defaults for user module
+rrs_user_default_shell: '/bin/bash'
+rrs_user_default_append: no
+rrs_user_default_createhome: yes
+rrs_user_default_force: no
+rrs_user_default_generate_ssh_key: no
+rrs_user_default_move_home: no
+rrs_user_default_non_unique: no
+rrs_user_default_remove: no
+rrs_user_default_ssh_key_bits: 4096
+# This state var not currently in use.  Default in template and is "absent"
+rrs_user_default_state: absent
+rrs_user_default_system: no
+rrs_user_default_update_password: on_create
+  
+# Defaults for groups module
+rrs_group_default_state: present
+rrs_group_default_system: no
+  
+  
+# Defaults for auth keys module
+rrs_authorized_keys_default_manage_dir: yes
+#rrs_authorized_keys_default_path: 
+rrs_authorized_keys_default_validate_certs: yes
+rrs_authorized_keys_default_state: present
+rrs_authorized_keys_default_exclusive: yes
+  

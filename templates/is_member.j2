@@ -1,0 +1,23 @@
+{#- notice dashes. removes \n. -#}
+{#- this uses the if hack to change outer vars from in loop -#}
+{% set testvars = {'user_state': False} %}
+{% if item.on_systems is defined %}
+{% if item.on_systems is iterable %}
+{% for var1 in item.on_systems %}
+{#- is item listed the name of a system? -#}  
+{% if var1 == inventory_hostname %}
+{% if testvars.update({'user_state': True}) %}{% endif %}
+{% endif %}
+{#- or was defined as all? -#}
+{% if var1 == 'all' %}
+{% if testvars.update({'user_state': True}) %}{% endif %}
+{% endif %}
+{%- for inner_item in group_names -%}
+{% if inner_item == var1 %}
+{% if testvars.update({'user_state': True}) %}{% endif %}
+{%- endif -%}
+{%- endfor -%}
+{% endfor %}
+{%- endif -%}
+{%- endif -%}
+{{ testvars.user_state }}

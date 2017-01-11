@@ -1,0 +1,16 @@
+---
+# tasks file for rrs.centralized-users
+
+- name: Process list of groups
+  group:
+  args:
+    name: "{{ item.name }}"
+    gid: "{{ item.gid | default(omit) }}"
+    state: "{{item.state | default(rrs_group_default_state) }}"
+    system: "{{item.system | default(rrs_group_default_system) }}"
+  with_items: group_list
+  
+- name: "Building list of users"
+  include: do_users.yml
+  with_items: user_list
+

@@ -39,6 +39,7 @@ All parameters supported by the Ansible users, groups or authrorized_keys module
   
   # List all users and group memberships for all systems here.
   # can override defaults for individuals here
+  # Default is *absent*.  To remove a user from all systems, list no valid inventory entries in "on_systems:"
   user_list:
     - name: mike
       comment: mike@example.com

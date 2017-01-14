@@ -1,4 +1,4 @@
-rrs.centralized-users
+ansible-centralized-users
 =========
 
 This role is meant to be a substitute for a centralized store of users and groups in cases where systems such as LDAP don't make sense due to the small size of an environment.

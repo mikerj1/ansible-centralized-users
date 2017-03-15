@@ -3,7 +3,7 @@
 
 
 
-- name: "Processing presence of user {{ item.name }}"
+- name: "Processing presence/absence of user {{ item.name }}"
   user:
   args:
     name: "{{ item.name }}"
@@ -41,3 +41,17 @@
     validate_certs: "{{ item.validate_certs | default(rrs_authorized_keys_default_validate_certs) }}"
     key: "{{ item.key | default('')}}"
   when: "{{ lookup('template', 'templates/is_member.j2') }}"
+
+
+# Credit https://github.com/selivan/ansible-set-user-password-expire
+# getent doesn't work if password has not been set
+- name: "Check valid password time for user {{ item.name }}"
+  shell: chage -l "{{ item.name }}" | grep Maximum | cut -d':' -f2 | sed 's/ //'
+  register: "user_pw_valid_time"
+  changed_when: False
+  when: "{{ lookup('template', 'templates/is_member.j2') }}"
+      
+- name: "Set password valid time for user {{ item.name }}"
+  shell: chage -M "{{ rrs_user_password_default_valid_time }}" "{{ item.name }}"
+  when: "{{ lookup('template', 'templates/is_member.j2') }} and {{ user_pw_valid_time.stdout }} is defined and {{ user_pw_valid_time.stdout }} != {{ rrs_user_password_default_valid_time }}"
+  

@@ -27,4 +27,7 @@ rrs_authorized_keys_default_manage_dir: yes
 rrs_authorized_keys_default_validate_certs: yes
 rrs_authorized_keys_default_state: present
 rrs_authorized_keys_default_exclusive: yes
-  
+
+# Defaults for password valid time
+# Default high because keys should be in use
+rrs_user_password_default_valid_time: 3650

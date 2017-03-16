@@ -52,6 +52,8 @@
   when: "{{ lookup('template', 'templates/is_member.j2') }}"
       
 - name: "Set password valid time for user {{ item.name }}"
-  shell: chage -M "{{ rrs_user_password_default_valid_time }}" "{{ item.name }}"
-  when: "{{ lookup('template', 'templates/is_member.j2') }} and {{ user_pw_valid_time.stdout }} is defined and {{ user_pw_valid_time.stdout }} != {{ rrs_user_password_default_valid_time }}"
-  
+  shell: chage -M "{{ item.password_valid_days | rrs_user_password_default_valid_time }}" "{{ item.name }}"
+  register: status
+  when: "({{ lookup('template', 'templates/is_member.j2') }}) and (({{ user_pw_valid_time.stdout }} is defined and item.password_valid_days is defined and {{ user_pw_valid_time.stdout }} != {{ item.password_valid_days }}) or ({{ user_pw_valid_time.stdout }} is defined and {{ item.password_valid_days }} is not defined and {{ user_pw_valid_time.stdout }} != {{ rrs_user_password_default_valid_time }}))"
+
+- debug: var=status

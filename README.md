@@ -84,7 +84,7 @@ Example Playbook
 - hosts: all
 
   roles:
-  - rrs.centralized-users
+  - mikerj1.ansible-centralized-users
 
 
 
